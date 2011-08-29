@@ -1,9 +1,7 @@
-require_relative 'httpcron-client-object'
-
 module HTTPCronClient
 
   # An enumeration relying on HTTPCron pagination
-  class PaginatedEnum < HTTPCronClientObject
+  class PaginatedEnum < HTTPCronClientModel
 
     include Enumerable
 

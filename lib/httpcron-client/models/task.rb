@@ -1,6 +1,6 @@
 module HTTPCronClient
 
-  class Task < HTTPCronClientObject
+  class Task < HTTPCronClientModel
 
     attr_accessor :name, :url, :timeout, :enabled, :cron, :timezone
 

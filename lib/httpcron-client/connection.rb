@@ -2,13 +2,6 @@ require 'rest-client'
 require 'net/http/digest_auth'
 require 'json'
 
-
-require_relative 'objects/httpcron-client-object'
-require_relative 'objects/paginated-enum'
-require_relative 'objects/execution'
-require_relative 'objects/task'
-require_relative 'objects/user'
-
 module HTTPCronClient
 
   class Connection
@@ -70,8 +63,4 @@ module HTTPCronClient
   end
 
 end
-
-require_relative 'connection/execution'
-require_relative 'connection/task'
-require_relative 'connection/user'
 

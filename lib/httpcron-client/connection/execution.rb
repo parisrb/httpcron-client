@@ -1,5 +1,3 @@
-require_relative '../connection'
-
 module HTTPCronClient
 
   class Connection

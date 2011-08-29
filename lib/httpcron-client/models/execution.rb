@@ -1,6 +1,6 @@
 module HTTPCronClient
 
-  class Execution < HTTPCronClientObject
+  class Execution < HTTPCronClientModel
 
     attr_reader :id, :task_id, :status, :start_at, :duration, :response
 

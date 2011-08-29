@@ -1,7 +1,7 @@
 module HTTPCronClient
 
   # An object handled by HTTPCronClient
-  class HTTPCronClientObject
+  class HTTPCronClientModel
 
     attr_reader :connection
 

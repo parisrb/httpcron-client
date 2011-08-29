@@ -1,6 +1,6 @@
 module HTTPCronClient
 
-  class User < HTTPCronClientObject
+  class User < HTTPCronClientModel
 
     attr_accessor :username, :timezone, :admin
 
