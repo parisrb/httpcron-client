@@ -19,7 +19,8 @@ module HTTPCronClient
 
     def each &block
       current_page = 0
-      while (records = JSON.parse(connection.request(:get, "#{@path}?page=#{current_page}&limit=#{connection.limit}", {}))['records']).length > 0
+      complete_path = "#{@path}?page=#{current_page}#{connection.limit ? "&limit=#{connection.limit}" : ''}"
+      while (records = JSON.parse(connection.request(:get, complete_path, {}))['records']).length > 0
         records.each do |r|
           block.call(@object_class.new(connection, r))
         end

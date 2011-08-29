@@ -29,7 +29,7 @@ module HTTPCronClient
       end
       @login = login
       @password = password
-      @limit = params[:limit] || 100
+      @limit = params[:limit]
 
       authenticate
     end
