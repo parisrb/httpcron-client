@@ -2,7 +2,7 @@ module HTTPCronClient
 
   class Execution < HTTPCronClientObject
 
-    attr_reader :id, :task_id, :status, :run_at, :duration, :response
+    attr_reader :id, :task_id, :status, :start_at, :duration, :response
 
     def initialize connection, hash
       super connection
@@ -32,7 +32,7 @@ module HTTPCronClient
 
       @task_id= hash['task_id']
       @status= hash['status']
-      @run_at= DateTime.pase(hash['run_at'])
+      @start_at= DateTime.pase(hash['start_at'])
       @duration= hash['duration']
       @response= hash['response']
     end
