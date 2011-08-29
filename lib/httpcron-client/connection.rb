@@ -63,6 +63,10 @@ module HTTPCronClient
       uri
     end
 
+    def server_config
+      JSON.parse(request :get, 'config')
+    end
+
   end
 
 end
