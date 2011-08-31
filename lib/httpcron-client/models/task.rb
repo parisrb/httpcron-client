@@ -11,16 +11,22 @@ module HTTPCronClient
       from_hash hash
     end
 
+    # Delete the task
+    def delete
+      connection.delete_task id
+      nil
+    end
+
     # List the executions for this task
     # <tt>order</tt> can specify the order
     def executions order = nil
       connection.executions(id, order)
     end
 
-    # Delete the task
-    def delete
-      connection.delete_task id
-      nil
+    # List the successful executions for this task
+    # <tt>order</tt> can specify the order
+    def successful_executions order = nil
+      connection.successful_executions(id, order)
     end
 
     # Save the task
@@ -35,6 +41,12 @@ module HTTPCronClient
           :enabled=> enabled}
       from_hash(JSON.parse(connection.request :put, "tasks/#{id}", params))
       self
+    end
+
+    # List the failed executions for this task
+    # <tt>order</tt> can specify the order
+    def failed_executions order = nil
+      connection.failed_executions(id, order)
     end
 
     # Get the task's user
