@@ -57,4 +57,21 @@ describe 'user API' do
     user.id.must_equal USER_VALUE['id']
   end
 
+  it 'can update a user' do
+    stub_request(:get, "http://localhost/api/users/1").
+        to_return(:status => 200, :body => USER_VALUE.to_json)
+
+    user = @connection.user 1
+    user.username = 'foo'
+    user.password = 'bar'
+
+    result = USER_VALUE.clone
+    result['username'] = 'blarg'
+    stub_request(:put, "http://localhost/api/users/1").
+        with(:body => {"id"=>"1", "username"=>"foo", "timezone"=>"UTC", "admin"=>"true", "password"=>"bar"}).
+        to_return(:status => 200, :body => result.to_json)
+    user.save
+    user.username.must_equal 'blarg'
+  end
+
 end
