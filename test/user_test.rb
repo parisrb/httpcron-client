@@ -74,4 +74,21 @@ describe 'user API' do
     user.username.must_equal 'blarg'
   end
 
+  it 'can lists user' do
+    stub_request(:get, "http://localhost/api/users/?page=0").
+        to_return(:status => 200, :body => {"total"=>1, "records"=> [USER_VALUE]}.to_json)
+    stub_request(:get, "http://localhost/api/users/?page=1").
+        to_return(:status => 200, :body => {"total"=>1, "records"=> []}.to_json)
+    result = @connection.users
+
+    result.class.must_equal HTTPCronClient::PaginatedEnum
+    size = 0
+    result.each do |u|
+      size += 1
+      u.id.must_equal 1
+    end
+
+    size.must_equal 1
+  end
+
 end
