@@ -7,7 +7,7 @@ describe 'user API' do
   end
 
   it 'can get the default user' do
-    stub_request(:get, "http://localhost/api/users/current").
+    stub_request(:get, 'http://localhost/api/users/current').
         to_return(:status => 200, :body => USER_VALUE.to_json)
 
     user = @connection.current_user
@@ -24,7 +24,7 @@ describe 'user API' do
   end
 
   it 'can get a user' do
-    stub_request(:get, "http://localhost/api/users/1").
+    stub_request(:get, 'http://localhost/api/users/1').
         to_return(:status => 200, :body => USER_VALUE.to_json)
 
     user = @connection.user 1
@@ -33,24 +33,24 @@ describe 'user API' do
   end
 
   it 'can delete a user from the connection' do
-    stub_request(:delete, "http://localhost/api/users/1").
-        to_return(:status => 200, :body => "")
+    stub_request(:delete, 'http://localhost/api/users/1').
+        to_return(:status => 200, :body => '')
     @connection.delete_user 1
   end
 
   it 'can delete a user from the user' do
-    stub_request(:get, "http://localhost/api/users/1").
+    stub_request(:get, 'http://localhost/api/users/1').
         to_return(:status => 200, :body => USER_VALUE.to_json)
     user = @connection.user 1
 
-    stub_request(:delete, "http://localhost/api/users/1").
-        to_return(:status => 200, :body => "")
+    stub_request(:delete, 'http://localhost/api/users/1').
+        to_return(:status => 200, :body => '')
     user.delete
   end
 
   it 'can create a user' do
-    stub_request(:post, "http://localhost/api/users").
-        with(:body => {"username"=>"foo", "password"=>"bar", "admin"=>"false"}).
+    stub_request(:post, 'http://localhost/api/users').
+        with(:body => {'username' => 'foo', 'password' => 'bar', 'admin' => 'false'}).
         to_return(:status => 200, :body => USER_VALUE.to_json)
     user = @connection.create_user 'foo', 'bar'
     user.class.must_equal HTTPCronClient::User
@@ -58,7 +58,7 @@ describe 'user API' do
   end
 
   it 'can update a user' do
-    stub_request(:get, "http://localhost/api/users/1").
+    stub_request(:get, 'http://localhost/api/users/1').
         to_return(:status => 200, :body => USER_VALUE.to_json)
 
     user = @connection.user 1
@@ -67,18 +67,18 @@ describe 'user API' do
 
     result = USER_VALUE.clone
     result['username'] = 'blarg'
-    stub_request(:put, "http://localhost/api/users/1").
-        with(:body => {"id"=>"1", "username"=>"foo", "timezone"=>"UTC", "admin"=>"true", "password"=>"bar"}).
+    stub_request(:put, 'http://localhost/api/users/1').
+        with(:body => {'id' => '1', 'username' => 'foo', 'timezone' => 'UTC', 'admin' => 'true', 'password' => 'bar'}).
         to_return(:status => 200, :body => result.to_json)
     user.save
     user.username.must_equal 'blarg'
   end
 
   it 'can lists user' do
-    stub_request(:get, "http://localhost/api/users/?page=0").
-        to_return(:status => 200, :body => {"total"=>1, "records"=> [USER_VALUE]}.to_json)
-    stub_request(:get, "http://localhost/api/users/?page=1").
-        to_return(:status => 200, :body => {"total"=>1, "records"=> []}.to_json)
+    stub_request(:get, 'http://localhost/api/users/?page=0').
+        to_return(:status => 200, :body => {'total' => 1, 'records' => [USER_VALUE]}.to_json)
+    stub_request(:get, 'http://localhost/api/users/?page=1').
+        to_return(:status => 200, :body => {'total' => 1, 'records' => []}.to_json)
     result = @connection.users
 
     result.class.must_equal HTTPCronClient::PaginatedEnum
