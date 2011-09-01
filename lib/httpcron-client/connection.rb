@@ -46,6 +46,9 @@ module HTTPCronClient
       res = h.request req
       @digest_auth = Net::HTTP::DigestAuth.new
       @header = res['www-authenticate']
+      unless @header
+        raise 'No [www-authenticate] header in the server\'s response'
+      end
     end
 
     # Create an uri object from the url string and add the login / password
