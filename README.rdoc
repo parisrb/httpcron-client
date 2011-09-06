@@ -1,1 +1,31 @@
 = httpcron-client is a ruby client for httpcron
+
+  require 'httpcron-client'
+
+  # connect to the server
+  connection = HTTPCronClient::Connection.new('http://localhost:9292', 'httpcronadmin', 'httpcronadmin')
+
+  # create a task
+  task = connection.current_user.create_task, 'my task', 'http://example.com', '* * * * *'
+
+  #list its executions
+  task.executions.each do |e|
+    p "Execution started at #{e.started_at}"
+  end
+
+  taks.name = 'my wonderful task'
+  task.save
+
+All the access methods are available on the objects and on the <tt>Connection<tt> class:
+
+  # use the object
+  connection.user(1).failed_executions
+
+  # use the connection (avoid loading the user from the server)
+  connection.failed_executions_for_user 1
+
+To avoid managing conflict and other complicated things there is no cache at all, you can use
+
+  RestClient.log = STDOUT
+
+if you want to log the calls being done.
