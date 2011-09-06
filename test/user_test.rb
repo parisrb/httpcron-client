@@ -86,7 +86,7 @@ describe 'user API' do
 
     test_list_single_element @connection.users do |u|
       u.class.must_equal HTTPCronClient::User
-      u.id.must_equal 1
+      u.id.must_equal USER_VALUE['id']
     end
   end
 
@@ -98,7 +98,7 @@ describe 'user API' do
 
     test_list_single_element @connection.users('username.desc') do |u|
       u.class.must_equal HTTPCronClient::User
-      u.id.must_equal 1
+      u.id.must_equal USER_VALUE['id']
     end
   end
 

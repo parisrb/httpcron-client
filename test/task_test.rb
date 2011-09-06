@@ -27,6 +27,7 @@ describe 'task API' do
 
     task.created_at.must_equal DateTime.parse(TASK_VALUE['created_at'])
     task.updated_at.must_equal DateTime.parse(TASK_VALUE['updated_at'])
+
     task.user.class.must_equal HTTPCronClient::User
     task.user.id.must_equal 1
   end
@@ -76,7 +77,6 @@ describe 'task API' do
   end
 
   it 'can list tasks for current user' do
-
     stub_request(:get, 'http://localhost/api/tasks?page=0').
         to_return(:status => 200, :body => create_list_response([TASK_VALUE], 1))
     stub_request(:get, 'http://localhost/api/tasks?page=1').
@@ -84,7 +84,7 @@ describe 'task API' do
 
     test_list_single_element @connection.tasks do |t|
       t.class.must_equal HTTPCronClient::Task
-      t.id.must_equal 1
+      t.id.must_equal TASK_VALUE['id']
     end
 
   end
@@ -99,7 +99,7 @@ describe 'task API' do
 
       test_list_single_element @connection.tasks(1) do |t|
         t.class.must_equal HTTPCronClient::Task
-        t.id.must_equal 1
+        t.id.must_equal TASK_VALUE['id']
       end
     end
 
@@ -111,11 +111,10 @@ describe 'task API' do
 
       test_list_single_element current_user.tasks do |t|
         t.class.must_equal HTTPCronClient::Task
-        t.id.must_equal 1
+        t.id.must_equal TASK_VALUE['id']
       end
 
     end
-
 
     it 'can list tasks from the connection with order' do
       stub_request(:get, 'http://localhost/api/tasks/user/1?order=name.asc&page=0').
@@ -125,7 +124,7 @@ describe 'task API' do
 
       test_list_single_element @connection.tasks(1, 'name.asc') do |t|
         t.class.must_equal HTTPCronClient::Task
-        t.id.must_equal 1
+        t.id.must_equal TASK_VALUE['id']
       end
     end
 
@@ -137,7 +136,7 @@ describe 'task API' do
 
       test_list_single_element current_user.tasks('name.asc') do |t|
         t.class.must_equal HTTPCronClient::Task
-        t.id.must_equal 1
+        t.id.must_equal TASK_VALUE['id']
       end
 
     end

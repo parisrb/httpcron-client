@@ -28,13 +28,13 @@ module HTTPCronClient
     # List the failed executions for this user
     # <tt>order</tt> can specify the order
     def failed_executions order = nil
-      connections.failed_executions_for_user id, order
+      connection.failed_executions_for_user id, order
     end
 
     # List the executions for this user
     # <tt>order</tt> can specify the order
     def executions order = nil
-      connections.executions_for_user id, order
+      connection.executions_for_user id, order
     end
 
     # Save the user
@@ -50,7 +50,7 @@ module HTTPCronClient
     # List the successful executions for this user
     # <tt>order</tt> can specify the order
     def successful_executions order = nil
-      connections.successful_executions_for_user id, order
+      connection.successful_executions_for_user id, order
     end
 
     # List the tasks for this user

@@ -5,24 +5,37 @@ require 'webmock/minitest'
 require_relative '../lib/httpcron-client'
 
 USER_VALUE = {
-    "created_at" => "2011-08-29T20:55:51+00:00",
-    "updated_at" => "2011-08-29T20:55:51+00:00",
-    "admin" => true,
-    "username" => "httpcronadmin",
-    "timezone" => "UTC",
-    "id" => 1}
+    'created_at' => '2011-08-29T20:55:51+00:00',
+    'updated_at' => '2011-08-29T20:55:51+00:00',
+    'admin' => true,
+    'username' => 'httpcronadmin',
+    'timezone' => 'UTC',
+    'id' => 1
+}
 
-TASK_VALUE = {"name" => "task",
-              "created_at" => "2011-09-01T18:21:50+00:00",
-              "updated_at" => "2011-09-01T18:21:50+00:00",
-              "next_execution" => "2012-01-01T00:00:00+00:00",
-              "cron" => "0 0 1 1 *",
-              "timeout" => 60,
-              "url" => "http://example.com",
-              "timezone" => "UTC",
-              "enabled" => true,
-              "id" => 1,
-              "user_id" => 1}
+TASK_VALUE = {
+    'name' => 'task',
+    'created_at' => '2011-09-01T18:21:50+00:00',
+    'updated_at' => '2011-09-01T18:21:50+00:00',
+    'next_execution' => '2012-01-01T00:00:00+00:00',
+    'cron' => '0 0 1 1 *',
+    'timeout' => 60,
+    'url' => 'http://example.com',
+    'timezone' => 'UTC',
+    'enabled' => true,
+    'id' => 1,
+    'user_id' => 1
+}
+
+EXECUTION_VALUE = {
+    'id' => 1,
+    'task_id' =>1,
+    'status' => 200,
+    'started_at' => '2011-09-06T09:21:00+00:00',
+    'duration' => 2,
+    'response' => 'Foo'
+}
+
 
 def create_connection
   stub_request(:get, "http://localhost/api/authenticate").
