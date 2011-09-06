@@ -16,7 +16,7 @@
   taks.name = 'my wonderful task'
   task.save
 
-All the access methods are available on the objects and on the <tt>Connection<tt> class:
+All the access methods are available on the objects and on the <tt>Connection</tt> class:
 
   # use the object
   connection.user(1).failed_executions
