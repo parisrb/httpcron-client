@@ -33,9 +33,9 @@ module HTTPCronClient
     # <tt>order</tt> can specify the order, default to id.desc
     def tasks user_id = nil, order = nil
       if user_id
-        PaginatedEnum.new self, 'tasks', Task, order
-      else
         PaginatedEnum.new self, "tasks/user/#{user_id}", Task, order
+      else
+        PaginatedEnum.new self, 'tasks', Task, order
       end
     end
 

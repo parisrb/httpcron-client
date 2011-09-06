@@ -32,20 +32,24 @@ describe 'user API' do
     user.id.must_equal USER_VALUE['id']
   end
 
-  it 'can delete a user from the connection' do
-    stub_request(:delete, 'http://localhost/api/users/1').
-        to_return(:status => 200, :body => '')
-    @connection.delete_user 1
-  end
+  describe 'deletion' do
 
-  it 'can delete a user from the user' do
-    stub_request(:get, 'http://localhost/api/users/1').
-        to_return(:status => 200, :body => USER_VALUE.to_json)
-    user = @connection.user 1
+    it 'can delete a user from the connection' do
+      stub_request(:delete, 'http://localhost/api/users/1').
+          to_return(:status => 200, :body => '')
+      @connection.delete_user 1
+    end
 
-    stub_request(:delete, 'http://localhost/api/users/1').
-        to_return(:status => 200, :body => '')
-    user.delete
+    it 'can delete a user from the user' do
+      stub_request(:get, 'http://localhost/api/users/1').
+          to_return(:status => 200, :body => USER_VALUE.to_json)
+      user = @connection.user 1
+
+      stub_request(:delete, 'http://localhost/api/users/1').
+          to_return(:status => 200, :body => '')
+      user.delete
+    end
+
   end
 
   it 'can create a user' do
@@ -76,19 +80,26 @@ describe 'user API' do
 
   it 'can lists user' do
     stub_request(:get, 'http://localhost/api/users/?page=0').
-        to_return(:status => 200, :body => {'total' => 1, 'records' => [USER_VALUE]}.to_json)
+        to_return(:status => 200, :body => create_list_response([USER_VALUE], 1))
     stub_request(:get, 'http://localhost/api/users/?page=1').
-        to_return(:status => 200, :body => {'total' => 1, 'records' => []}.to_json)
-    result = @connection.users
+        to_return(:status => 200, :body => create_list_response([], 1))
 
-    result.class.must_equal HTTPCronClient::PaginatedEnum
-    size = 0
-    result.each do |u|
-      size += 1
+    test_list_single_element @connection.users do |u|
+      u.class.must_equal HTTPCronClient::User
       u.id.must_equal 1
     end
+  end
 
-    size.must_equal 1
+  it 'can lists user with order' do
+    stub_request(:get, 'http://localhost/api/users/?order=username.desc&page=0').
+        to_return(:status => 200, :body => create_list_response([USER_VALUE], 1))
+    stub_request(:get, 'http://localhost/api/users/?order=username.desc&page=1').
+        to_return(:status => 200, :body => create_list_response([], 1))
+
+    test_list_single_element @connection.users('username.desc') do |u|
+      u.class.must_equal HTTPCronClient::User
+      u.id.must_equal 1
+    end
   end
 
 end

@@ -35,3 +35,20 @@ def current_user
       to_return(:status => 200, :body => USER_VALUE.to_json)
   @connection.current_user
 end
+
+def create_list_response list, total = 0
+  {'total' => total, 'records' => list}.to_json
+end
+
+def test_list_single_element list, &block
+  list.class.must_equal HTTPCronClient::PaginatedEnum
+  size = 0
+  list.each do |u|
+    size += 1
+    if block_given?
+      block.call u
+    end
+  end
+  size.must_equal 1
+
+end
