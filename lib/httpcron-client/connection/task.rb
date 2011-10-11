@@ -3,7 +3,7 @@ module HTTPCronClient
   class Connection
 
     # Create a task
-    def create_task user_id, name, url, cron, enabled = nil, timeout = nil, timezone = nil
+    def create_task user_id, name, url, cron, enabled = nil, timeout = nil, mail_when_success = false, mail_when_failure = false, timezone = nil
       params = {:user_id => user_id, :name=> name, :url => url, :cron => cron}
       if timezone
         params[:timezone] = timezone
@@ -14,6 +14,8 @@ module HTTPCronClient
       if timeout
         params[:timeout] = timeout
       end
+      params[:mail_when_success] = mail_when_success
+      params[:mail_when_failure] = mail_when_failure
       Task.new(self, JSON.parse(request :post, 'tasks', params))
     end
 

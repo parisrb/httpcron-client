@@ -14,8 +14,8 @@ module HTTPCronClient
     end
 
     # Create a task and return it
-    def create_task name, url, cron, enabled = nil, timeout = nil, timezone = nil
-      connection.create_task(id, name, url, cron, enabled, timeout, timezone)
+    def create_task name, url, cron, enabled = nil, timeout = nil, mail_when_success = false, mail_when_failure = false, timezone = nil
+      connection.create_task(id, name, url, cron, enabled, timeout, mail_when_success, mail_when_failure, timezone)
     end
 
     # Delete the user

@@ -56,7 +56,7 @@ describe 'task API' do
 
     it 'can create a task from the connection' do
       stub_request(:post, 'http://localhost/api/tasks').
-          with(:body => {'user_id' => '1', 'name' => 'task', 'cron' => '0 0 1 1 *', 'url' => 'http://example.com'}).
+          with(:body => {'user_id' => '1', 'name' => 'task', 'cron' => '0 0 1 1 *', 'url' => 'http://example.com', 'mail_when_success' => 'false', 'mail_when_failure' => 'false'}).
           to_return(:status => 200, :body => TASK_VALUE.to_json)
       task = @connection.create_task 1, 'task', 'http://example.com', '0 0 1 1 *'
       task.class.must_equal HTTPCronClient::Task
@@ -67,7 +67,7 @@ describe 'task API' do
       user = current_user
 
       stub_request(:post, 'http://localhost/api/tasks').
-          with(:body => {'user_id' => '1', 'name' => 'task', 'cron' => '0 0 1 1 *', 'url' => 'http://example.com'}).
+          with(:body => {'user_id' => '1', 'name' => 'task', 'cron' => '0 0 1 1 *', 'url' => 'http://example.com', 'mail_when_success' => 'false', 'mail_when_failure' => 'false'}).
           to_return(:status => 200, :body => TASK_VALUE.to_json)
       task = user.create_task 'task', 'http://example.com', '0 0 1 1 *'
       task.class.must_equal HTTPCronClient::Task
