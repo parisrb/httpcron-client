@@ -3,8 +3,8 @@ module HTTPCronClient
   class Connection
 
     # Create a user
-    def create_user username, password, admin = false, timezone = nil
-      params = {:username => username, :password => password, :admin => admin}
+    def create_user username, password, email_address, admin = false, timezone = nil
+      params = {:username => username, :password => password, :email_address => email_address, :admin => admin}
       if timezone
         params[:timezone] = timezone
       end

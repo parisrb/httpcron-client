@@ -2,7 +2,7 @@ module HTTPCronClient
 
   class User < HTTPCronClientModel
 
-    attr_accessor :username, :timezone, :admin
+    attr_accessor :username, :timezone, :admin, :email_address
 
     attr_reader :id, :created_at, :updated_at
 
@@ -39,7 +39,7 @@ module HTTPCronClient
 
     # Save the user
     def save
-      params = {:id => id, :username => username, :timezone => timezone, :admin => admin}
+      params = {:id => id, :username => username, :timezone => timezone, :admin => admin, :email_address => email_address}
       if @password
         params[:password] = @password
       end
@@ -60,7 +60,7 @@ module HTTPCronClient
     end
 
     def to_s
-      "User id: [#{id}], username: [#{username}], admin: [#{admin}] timezone: [#{timezone}], created_at: [#{created_at}], updated_at: [#{updated_at}]"
+      "User id: [#{id}], username: [#{username}], email_address: [#{email_address}], admin: [#{admin}] timezone: [#{timezone}], created_at: [#{created_at}], updated_at: [#{updated_at}]"
     end
 
     private
@@ -72,6 +72,7 @@ module HTTPCronClient
       @admin= hash['admin']
       @username= hash['username']
       @timezone= hash['timezone']
+      @email_address= hash['email_address']
 
       @password = nil
 

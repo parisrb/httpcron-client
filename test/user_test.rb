@@ -18,6 +18,7 @@ describe 'user API' do
     user.admin.must_equal USER_VALUE['admin']
     user.username.must_equal USER_VALUE['username']
     user.timezone.must_equal USER_VALUE['timezone']
+    user.email_address.must_equal USER_VALUE['email_address']
 
     user.created_at.must_equal DateTime.parse(USER_VALUE['created_at'])
     user.updated_at.must_equal DateTime.parse(USER_VALUE['updated_at'])
@@ -54,9 +55,9 @@ describe 'user API' do
 
   it 'can create a user' do
     stub_request(:post, 'http://localhost/api/users').
-        with(:body => {'username' => 'foo', 'password' => 'bar', 'admin' => 'false'}).
+        with(:body => {'username' => 'foo', 'password' => 'bar', 'admin' => 'false', 'email_address' => 'foo@bar.com'}).
         to_return(:status => 200, :body => USER_VALUE.to_json)
-    user = @connection.create_user 'foo', 'bar'
+    user = @connection.create_user 'foo', 'bar', 'foo@bar.com'
     user.class.must_equal HTTPCronClient::User
     user.id.must_equal USER_VALUE['id']
   end
@@ -68,11 +69,12 @@ describe 'user API' do
     user = @connection.user 1
     user.username = 'foo'
     user.password = 'bar'
+    user.email_address = 'foo@bar.com'
 
     result = USER_VALUE.clone
     result['username'] = 'blarg'
     stub_request(:put, 'http://localhost/api/users/1').
-        with(:body => {'id' => '1', 'username' => 'foo', 'timezone' => 'UTC', 'admin' => 'true', 'password' => 'bar'}).
+        with(:body => {'id' => '1', 'username' => 'foo', 'timezone' => 'UTC', 'admin' => 'true', 'password' => 'bar', 'email_address' => 'foo@bar.com'}).
         to_return(:status => 200, :body => result.to_json)
     user.save
     user.username.must_equal 'blarg'
